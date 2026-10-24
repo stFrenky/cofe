@@ -21,7 +21,7 @@
   --sans:'Manrope',system-ui,-apple-system,'Segoe UI',sans-serif;
   --wrap:1320px;--ease:cubic-bezier(.22,1,.36,1);--ease-io:cubic-bezier(.65,0,.35,1);
 }
-*{box-sizing:border-box;margin:0;padding:0}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 body{background:var(--ivory);color:var(--espresso);font:400 15px/1.7 var(--sans);overflow-x:hidden;-webkit-font-smoothing:antialiased}
 img{display:block;max-width:100%}
@@ -82,6 +82,24 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .nav .links a:after{content:'';position:absolute;left:0;bottom:0;width:100%;height:1px;background:var(--terra);transform:scaleX(0);transform-origin:right;transition:transform .5s var(--ease)}
 .nav .links a:hover{opacity:1}.nav .links a:hover:after{transform:scaleX(1);transform-origin:left}
 .nav .right{display:flex;align-items:center;gap:22px}
+.burger{display:none;width:44px;height:44px;border-radius:50%;position:relative;flex:none;color:inherit}
+.burger i{position:absolute;left:12px;width:20px;height:1.5px;background:currentColor;transition:transform .5s var(--ease),top .5s var(--ease)}
+.burger i:first-child{top:18px}.burger i:last-child{top:25px}
+.menu-open .burger i:first-child{top:21px;transform:rotate(45deg)}.menu-open .burger i:last-child{top:21px;transform:rotate(-45deg)}
+.mnav{position:fixed;inset:0;z-index:49;background:var(--espresso);color:var(--ivory);transform:translateY(-102%);transition:transform .7s var(--ease),visibility 0s .7s;visibility:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:0 20px max(28px,env(safe-area-inset-bottom));overflow:hidden}
+.menu-open .mnav{transform:none;visibility:visible;transition:transform .7s var(--ease),visibility 0s}
+.menu-open .nav{color:var(--ivory)!important;background:transparent!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;box-shadow:none!important;transform:none!important}
+.menu-open .nav .btn{display:none}
+.mnav .mlinks{list-style:none;display:grid;gap:4px;margin-bottom:34px}
+.mnav .mlinks a{display:flex;align-items:baseline;gap:14px;font:400 clamp(34px,9vw,52px)/1.1 var(--display);padding:6px 0;opacity:0;transform:translateY(24px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
+.mnav .mlinks a small{font:600 10px/1 var(--sans);letter-spacing:.2em;color:var(--terra-2)}
+.menu-open .mnav .mlinks a{opacity:1;transform:none}
+.menu-open .mnav .mlinks li:nth-child(1) a{transition-delay:.25s}.menu-open .mnav .mlinks li:nth-child(2) a{transition-delay:.31s}.menu-open .mnav .mlinks li:nth-child(3) a{transition-delay:.37s}.menu-open .mnav .mlinks li:nth-child(4) a{transition-delay:.43s}.menu-open .mnav .mlinks li:nth-child(5) a{transition-delay:.49s}
+.mnav .mfoot{display:flex;justify-content:space-between;align-items:end;gap:16px;padding-top:22px;border-top:1px solid var(--line-dark);font:600 10px/1.6 var(--sans);letter-spacing:.18em;text-transform:uppercase;color:var(--sand)}
+.mnav .mfoot .mask{width:54px;height:54px;color:var(--terra-2);flex:none}
+.mnav .mword{position:absolute;left:50%;top:14%;transform:translateX(-50%);font:400 48vw/1 var(--display);color:transparent;-webkit-text-stroke:1px rgba(243,235,219,.12);pointer-events:none;white-space:nowrap}
+body.menu-open{overflow:hidden}
+@media(max-height:600px){.mnav{justify-content:center;padding-top:70px;overflow-y:auto}.mnav .mlinks{grid-template-columns:1fr 1fr;gap:0 28px;margin-bottom:20px}.mnav .mlinks a{font-size:clamp(24px,7vh,38px);padding:3px 0}.mnav .mfoot{padding-top:14px}.mnav .mfoot .mask{width:40px;height:40px}.mnav .mword{top:4%;font-size:30vw}}
 .nav .tag{font:500 11px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
 .nav .btn{padding:13px 20px}
 .dark-zone .nav:not(.solid){color:var(--ivory)}
@@ -94,10 +112,11 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   radial-gradient(50% 50% at 20% 20%,rgba(217,198,172,.55),transparent 70%),
   var(--ivory)}
 .hero-grain{position:absolute;inset:0;pointer-events:none;opacity:.5;mix-blend-mode:multiply;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.25 0 0 0 0 0.15 0 0 0 0 0.12 0 0 0 .18 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
-.hero-word{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font:400 clamp(140px,30vw,520px)/1 var(--display);letter-spacing:-.03em;color:transparent;-webkit-text-stroke:1px rgba(64,39,31,.16);white-space:nowrap;pointer-events:none;user-select:none}
+.hero-word{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);will-change:transform,opacity;font:400 clamp(140px,30vw,520px)/1 var(--display);letter-spacing:-.03em;color:transparent;-webkit-text-stroke:1px rgba(64,39,31,.16);white-space:nowrap;pointer-events:none;user-select:none}
 #scene{position:absolute;inset:0;width:100%;height:100%;display:block}
 .hero-fallback{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none}
-.hero-copy{position:absolute;left:max(24px,calc((100vw - var(--wrap))/2));top:50%;transform:translateY(-50%);width:min(620px,60vw);z-index:3;will-change:transform,opacity}
+.hero-copy{position:absolute;left:max(24px,calc((100vw - var(--wrap))/2));top:50%;transform:translateY(-50%);width:min(620px,60vw);z-index:3;will-change:transform,opacity;pointer-events:none}
+.hero-copy a{pointer-events:auto}
 .hero-copy .kicker{margin-bottom:28px}
 .hero-copy h1{font:400 clamp(54px,7.4vw,124px)/.94 var(--display);letter-spacing:-.02em;color:var(--espresso)}
 .hero-copy h1 .w{display:inline-block;overflow:hidden;vertical-align:bottom;padding-bottom:.08em;margin-bottom:-.08em}
@@ -125,7 +144,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 
 /* ---------- marquee ---------- */
 .marquee{background:var(--espresso);color:var(--ivory);padding:22px 0;overflow:hidden;position:relative;z-index:2}
-.marquee .track{display:flex;width:max-content;will-change:transform}
+.marquee .track{display:flex;width:max-content;will-change:transform;transform:translate3d(0,0,0)}
 .marquee .set{display:flex;align-items:center;gap:44px;padding-right:44px;font:400 22px/1 var(--display);letter-spacing:.02em;white-space:nowrap}
 .marquee .set .mask{width:34px;height:34px;color:var(--terra-2)}
 .marquee .set .dot{width:6px;height:6px;border-radius:50%;background:var(--terra)}
@@ -201,7 +220,7 @@ section{position:relative}
 .drink .info h3{font:400 24px/1.1 var(--display)}
 .drink .info .price{font:400 16px/1 var(--display);white-space:nowrap}
 .drink .info p{grid-column:1/-1;font-size:12.5px;line-height:1.6;color:var(--muted)}
-.menu-foot{display:flex;justify-content:space-between;align-items:center;gap:30px;margin-top:42px;padding-top:26px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+.menu-foot{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:18px 30px;margin-top:42px;padding-top:26px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
 
 /* atmosphere */
 .atmo{background:var(--espresso-2);color:var(--ivory);padding:160px 0;overflow:hidden}
@@ -211,14 +230,14 @@ section{position:relative}
 .atmo .lead{color:var(--sand)}
 .atmo .line-link{border-color:var(--sand);color:var(--ivory)}
 .atmo .line-link:after{background:var(--terra-2)}
-.atmo-visual{position:relative;aspect-ratio:1;max-width:620px;margin-left:auto}
+.atmo-visual{position:relative;width:100%;max-width:620px;aspect-ratio:1;margin-left:auto}
 .atmo-visual .big{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font:400 clamp(110px,16vw,240px)/1 var(--display);letter-spacing:-.03em;color:transparent;-webkit-text-stroke:1px rgba(243,235,219,.22);white-space:nowrap;pointer-events:none}
 .atmo-visual .sleeve{position:absolute;left:4%;top:10%;width:62%;border-radius:4px;overflow:hidden;box-shadow:0 50px 80px -30px rgba(0,0,0,.6);transform:rotate(-4deg)}
 .atmo-visual .sleeve img{width:100%}
 .atmo-visual .cam{position:absolute;right:6%;bottom:6%;width:36%;aspect-ratio:1;border-radius:4px;background:var(--terra);display:grid;place-items:center;overflow:hidden}
 .atmo-visual .cam .mask{width:70%;height:70%;color:var(--ivory)}
 .atmo-visual .cam small{position:absolute;left:14px;bottom:12px;font:600 9px/1 var(--sans);letter-spacing:.22em;text-transform:uppercase;color:var(--ivory)}
-.sticker{position:absolute;right:2%;top:2%;width:150px;height:150px;will-change:transform}
+.sticker{position:absolute;right:2%;top:2%;width:150px;height:150px;will-change:transform;transform:translate3d(0,0,0)}
 .sticker svg{width:100%;height:100%;overflow:visible}
 .sticker text{font:600 12px var(--sans);letter-spacing:.32em;fill:var(--ivory);text-transform:uppercase}
 .sticker .mask{position:absolute;left:50%;top:50%;width:58px;height:58px;transform:translate(-50%,-50%);color:var(--terra-2)}
@@ -240,7 +259,7 @@ section{position:relative}
 .row span:first-child{font:600 10px/1 var(--sans);letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
 .row span:nth-child(2){font:400 19px/1.3 var(--display)}
 .row span:nth-child(2) small{display:block;font:400 12px/1.5 var(--sans);color:var(--muted);margin-top:4px}
-.row a{font:600 11px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--terra)}
+.row a{font:600 11px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--terra);padding:10px 0;margin:-10px 0;white-space:nowrap}
 .hours{margin-top:40px;display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
 .hour{padding:20px;border-radius:6px;background:var(--ivory-2)}
 .hour small{display:block;font:600 10px/1 var(--sans);letter-spacing:.22em;text-transform:uppercase;color:var(--terra);margin-bottom:10px}
@@ -276,8 +295,10 @@ section{position:relative}
 }
 @media(max-width:900px){
   .wrap{width:calc(100% - 40px)}
-  .nav{height:68px}.nav .links,.nav .tag{display:none}
-  .hero{height:320vh}
+  .nav{height:68px}.nav .links,.nav .tag{display:none}.nav .right{gap:8px}.nav .btn{padding:14px 18px}.burger{display:block}
+  .nav.solid{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgba(243,235,219,.96)}
+  .hero{height:300vh}.hero-grain{display:none}
+  .hero-pin{background:radial-gradient(70% 45% at 60% 68%,rgba(183,97,72,.22),transparent 70%),var(--ivory)}
   .hero-copy{top:12%;transform:none;width:min(560px,calc(100vw - 40px))}
   .hero-copy .kicker{margin-bottom:18px}
   .hero-copy h1{font-size:clamp(46px,12vw,88px)}
@@ -293,19 +314,44 @@ section{position:relative}
   .identity-top,.menu-top{grid-template-columns:1fr;flex-direction:column;align-items:start;gap:18px;margin-bottom:40px}
   .menu-top .lead{justify-self:start}
   .atmo-grid{grid-template-columns:1fr;gap:60px}
-  .atmo-visual{margin:0 auto;max-width:520px}
+  .atmo-visual{margin:0 auto;max-width:520px;width:100%}
   .visit-grid{grid-template-columns:1fr;gap:40px}
   .swatches{grid-template-columns:1fr;gap:14px}
+  .sticker{width:112px;height:112px}.sticker .mask{width:44px;height:44px}.sticker text{font-size:11px}
+  .atmo .quote{margin-top:34px}
+}
+@media(max-width:900px) and (max-height:720px){
+  .hero-copy{top:9%}.hero-copy .kicker{margin-bottom:12px}
+  .hero-copy h1{font-size:clamp(36px,10.5vw,60px)}
+  .hero-copy p{font-size:12.5px;max-width:280px;margin:12px 0 16px;line-height:1.6}
+  .stage{bottom:52px}.stage strong{font-size:17px;margin:8px 0 4px}.stage span.sub{display:none}
+  .hero-meta span:last-child{display:none}
+}
+body.land .hero-copy{top:50%;bottom:auto;transform:translateY(-50%);width:min(520px,50vw)}
+body.land .hero-copy p{display:none}
+body.land .stage{display:none}
+body.land .hero-meta{bottom:14px}
+@media(hover:none){
+  .card:hover,.drink:hover{transform:none;box-shadow:0 1px 0 var(--line)}
+  .card:hover .ph img{transform:scale(1.04)}.drink:hover .vis img,.drink:hover .vis .big,.drink:hover .vis .ring{transform:none}
+  .sw:hover i{transform:none}.row:hover{padding-left:0}
 }
 @media(max-width:560px){
   .hero-copy{top:11%}
   .hero-copy h1{font-size:clamp(42px,12.5vw,66px)}
   .menu-grid{grid-template-columns:1fr}
   .drink{min-height:0}.drink .vis{height:190px}
-  .card{width:78vw}
+  .card{width:min(78vw,320px)}
+  .nav .right .btn{display:none}
+  .identity-top .lead,.menu-top .lead{max-width:none}
+  .h2{font-size:clamp(36px,10.5vw,52px)}
+  .lead{font-size:14px}
+  .story,.identity,.menu,.atmo,.visit{padding:80px 0}
+  .footer{padding:70px 0 28px}.footer-top{padding-bottom:40px}
+  .btn{padding:16px 22px}
   .row{grid-template-columns:1fr;gap:6px}
-  .principles li{grid-template-columns:36px 1fr;grid-auto-rows:auto}
-  .principles li span{grid-column:2}
+  .principles li{grid-template-columns:36px 1fr;grid-template-areas:'n t' 'n d';gap:8px 12px}
+  .principles li .num{grid-area:n}.principles li strong{grid-area:t}.principles li>span:last-child{grid-area:d}
   .hours{grid-template-columns:1fr}
   .footer-top{grid-template-columns:1fr}
   .marquee .set{font-size:18px;gap:28px;padding-right:28px}
@@ -328,16 +374,27 @@ section{position:relative}
     <nav class="links" aria-label="Разделы">
       <a href="#story">О нас</a><a href="#identity">Айдентика</a><a href="#menu">Меню</a><a href="#atmo">Атмосфера</a><a href="#visit">Контакты</a>
     </nav>
-    <div class="right"><span class="tag">Good coffee · Good mood</span><a class="btn" href="#visit"><span>Заглянуть</span></a></div>
+    <div class="right"><span class="tag">Good coffee · Good mood</span><a class="btn" href="#visit"><span>Заглянуть</span></a><button class="burger" id="burger" aria-label="Открыть меню" aria-controls="mnav" aria-expanded="false"><i></i><i></i></button></div>
   </div>
 </header>
+<div class="mnav" id="mnav" aria-hidden="true">
+  <div class="mword" aria-hidden="true">HOU</div>
+  <ul class="mlinks">
+    <li><a href="#story"><small>01</small>О нас</a></li>
+    <li><a href="#identity"><small>02</small>Айдентика</a></li>
+    <li><a href="#menu"><small>03</small>Меню</a></li>
+    <li><a href="#atmo"><small>04</small>Атмосфера</a></li>
+    <li><a href="#visit"><small>05</small>Контакты</a></li>
+  </ul>
+  <div class="mfoot"><div>Good coffee · Good mood<br>Хьюстон, у нас кофе.</div><span class="mask m-head"></span></div>
+</div>
 
 <!-- ============ HERO ============ -->
 <section class="hero" id="top" aria-label="Houston Coffee">
   <div class="hero-pin" id="pin">
     <div class="hero-word" aria-hidden="true" id="heroWord">HOUSTON</div>
     <canvas id="scene" aria-hidden="true"></canvas>
-    <img class="hero-fallback" id="fallback" alt="Фирменные стаканы Houston Coffee" src="__ASSET_products__">
+    <img class="hero-fallback" id="fallback" decoding="async" alt="Фирменные стаканы Houston Coffee" src="__ASSET_products__">
     <div class="hero-grain"></div>
     <div class="hero-copy" id="heroCopy">
       <div class="kicker">Кофейня · Specialty без снобизма</div>
@@ -369,7 +426,7 @@ section{position:relative}
   <span class="mask m-cup icon-cup rv" aria-hidden="true"></span>
   <div class="wrap story-grid">
     <div class="frame rv">
-      <div class="clip"><img src="__ASSET_products__" alt="Стаканы, крафт-пакет и меню Houston Coffee на каменной столешнице" data-parallax=".12"></div>
+      <div class="clip"><img decoding="async" src="__ASSET_products__" alt="Стаканы, крафт-пакет и меню Houston Coffee на каменной столешнице" data-parallax=".12"></div>
       <div class="cap"><span class="mask m-head"></span>Houston Coffee · Identity</div>
     </div>
     <div class="story-text">
@@ -399,11 +456,11 @@ section{position:relative}
   </div>
   <div class="rail-wrap">
     <div class="rail" id="rail" style="padding-left:max(24px,calc((100vw - var(--wrap))/2))">
-      <article class="card rv"><div class="ph"><img src="__ASSET_cup_ivory__" alt="Стакан Ivory с логотипом Houston Coffee"></div><div class="info"><small>01 / Cup · Ivory</small><h3>Стакан Ivory</h3><span class="num">#F3EBDB</span><p>Классика. Эспрессо-логотип на тёплой плотной бумаге, тёмная крышка.</p></div></article>
-      <article class="card rv"><div class="ph"><img src="__ASSET_cup_terra__" alt="Стакан Terracotta с логотипом Houston Coffee"></div><div class="info"><small>02 / Cup · Terracotta</small><h3>Стакан Terracotta</h3><span class="num">#B76148</span><p>Акцентный цвет коллекции. Логотип в слоновой кости — для тех, кто пьёт двойной.</p></div></article>
-      <article class="card rv"><div class="ph"><img src="__ASSET_bag__" alt="Крафт-пакет Houston Coffee со стикером"></div><div class="info"><small>03 / Bag · Kraft</small><h3>Крафт-пакет</h3><span class="num">Sticker</span><p>Для выпечки и зерна навынос. Терракотовый стикер с героиней бренда.</p></div></article>
-      <article class="card rv"><div class="ph"><img src="__ASSET_card__" alt="Меню Houston Coffee"></div><div class="info"><small>04 / Menu · Print</small><h3>Меню</h3><span class="num">A5</span><p>Короткое. Всё, что нужно, на одной странице — и ничего лишнего.</p></div></article>
-      <article class="card rv"><div class="ph"><img src="__ASSET_sleeve__" alt="Табличка «Хьюстон, у нас кофе»"></div><div class="info"><small>05 / Sign · Craft</small><h3>«Хьюстон, у нас кофе.»</h3><span class="num">Tagline</span><p>Фраза, которую хочется повторять. Живёт на стойке, стаканах и в сторис.</p></div></article>
+      <article class="card rv"><div class="ph"><img decoding="async" src="__ASSET_cup_ivory__" alt="Стакан Ivory с логотипом Houston Coffee"></div><div class="info"><small>01 / Cup · Ivory</small><h3>Стакан Ivory</h3><span class="num">#F3EBDB</span><p>Классика. Эспрессо-логотип на тёплой плотной бумаге, тёмная крышка.</p></div></article>
+      <article class="card rv"><div class="ph"><img decoding="async" src="__ASSET_cup_terra__" alt="Стакан Terracotta с логотипом Houston Coffee"></div><div class="info"><small>02 / Cup · Terracotta</small><h3>Стакан Terracotta</h3><span class="num">#B76148</span><p>Акцентный цвет коллекции. Логотип в слоновой кости — для тех, кто пьёт двойной.</p></div></article>
+      <article class="card rv"><div class="ph"><img decoding="async" src="__ASSET_bag__" alt="Крафт-пакет Houston Coffee со стикером"></div><div class="info"><small>03 / Bag · Kraft</small><h3>Крафт-пакет</h3><span class="num">Sticker</span><p>Для выпечки и зерна навынос. Терракотовый стикер с героиней бренда.</p></div></article>
+      <article class="card rv"><div class="ph"><img decoding="async" src="__ASSET_card__" alt="Меню Houston Coffee"></div><div class="info"><small>04 / Menu · Print</small><h3>Меню</h3><span class="num">A5</span><p>Короткое. Всё, что нужно, на одной странице — и ничего лишнего.</p></div></article>
+      <article class="card rv"><div class="ph"><img decoding="async" src="__ASSET_sleeve__" alt="Табличка «Хьюстон, у нас кофе»"></div><div class="info"><small>05 / Sign · Craft</small><h3>«Хьюстон, у нас кофе.»</h3><span class="num">Tagline</span><p>Фраза, которую хочется повторять. Живёт на стойке, стаканах и в сторис.</p></div></article>
     </div>
   </div>
   <div class="wrap">
@@ -426,7 +483,7 @@ section{position:relative}
       <article class="drink t1"><div class="vis"><span class="big">01</span><span class="ring"><span class="mask m-head" style="color:var(--espresso)"></span></span></div><div class="info"><small>01 / Hot</small><h3>Эспрессо</h3><span class="price">180 ₽</span><p>Классика в чистом виде. Настроен на сегодняшнее зерно.</p></div></article>
       <article class="drink t2"><div class="vis"><span class="big">02</span><span class="ring"><span class="mask m-cup" style="color:var(--espresso)"></span></span></div><div class="info"><small>02 / Milk</small><h3>Латте</h3><span class="price">290 ₽</span><p>Мягкий вкус и бархатная пенка. На любом молоке.</p></div></article>
       <article class="drink t3"><div class="vis"><span class="big">03</span><span class="ring"><span class="mask m-head" style="color:var(--ivory)"></span></span></div><div class="info"><small>03 / Cold</small><h3>Колд брю</h3><span class="price">320 ₽</span><p>Холодная кофейная энергия. 16 часов настаивания.</p></div></article>
-      <article class="drink t4"><div class="vis"><img src="__ASSET_croissant__" alt="Круассан"></div><div class="info"><small>04 / Bakery</small><h3>Круассан</h3><span class="price">220 ₽</span><p>Слоёный, на сливочном масле. Идеальное дополнение к любому кофе.</p></div></article>
+      <article class="drink t4"><div class="vis"><img decoding="async" src="__ASSET_croissant__" alt="Круассан"></div><div class="info"><small>04 / Bakery</small><h3>Круассан</h3><span class="price">220 ₽</span><p>Слоёный, на сливочном масле. Идеальное дополнение к любому кофе.</p></div></article>
     </div>
     <div class="menu-foot rv"><span>Полное меню — на стойке и в печатной версии А5.</span><a class="line-link" href="#visit">Заглянуть за чашкой <b>↗</b></a></div>
   </div>
@@ -445,7 +502,7 @@ section{position:relative}
     </div>
     <div class="atmo-visual">
       <div class="big" aria-hidden="true" data-parallax="-.06">HOUSTON</div>
-      <div class="sleeve rv"><img src="__ASSET_sleeve__" alt="Табличка «Хьюстон, у нас кофе» у стакана" data-parallax=".05"></div>
+      <div class="sleeve rv"><img decoding="async" src="__ASSET_sleeve__" alt="Табличка «Хьюстон, у нас кофе» у стакана" data-parallax=".05"></div>
       <div class="cam rv"><span class="mask m-cam"></span><small>Фотогенично в любой час</small></div>
       <div class="sticker" id="sticker" aria-hidden="true">
         <svg viewBox="0 0 150 150"><defs><path id="circ" d="M75,75 m-58,0 a58,58 0 1,1 116,0 a58,58 0 1,1 -116,0"/></defs><text><textPath href="#circ">Houston Coffee · Good coffee · Good mood · </textPath></text></svg>
@@ -546,6 +603,13 @@ const onScroll = () => {
 };
 addEventListener('scroll', onScroll, { passive: true }); onScroll();
 
+/* ---------- mobile menu ---------- */
+const burger = $('burger'), mnav = $('mnav');
+const setMenu = open => { document.body.classList.toggle('menu-open', open); burger.setAttribute('aria-expanded', open); mnav.setAttribute('aria-hidden', !open); };
+burger.addEventListener('click', () => setMenu(!document.body.classList.contains('menu-open')));
+mnav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+addEventListener('keydown', e => { if (e.key === 'Escape') setMenu(false); });
+
 /* ---------- cursor ---------- */
 const cur = $('cur');
 if (cur && matchMedia('(hover:hover) and (pointer:fine)').matches) {
@@ -558,6 +622,7 @@ if (cur && matchMedia('(hover:hover) and (pointer:fine)').matches) {
 
 /* ---------- marquee: direction follows scroll ---------- */
 const track = $('track');
+let mqOn = true; new IntersectionObserver(es => { mqOn = es[0].isIntersecting; }).observe(track.parentElement);
 let mx = 0, mspeed = .6, setW = 0;
 const measure = () => { setW = track.children[0].getBoundingClientRect().width; };
 addEventListener('resize', measure); measure();
@@ -565,7 +630,7 @@ addEventListener('resize', measure); measure();
 /* ---------- parallax + sticker + rail ---------- */
 const plx = [...document.querySelectorAll('[data-parallax]')];
 const sticker = $('sticker'), rail = $('rail'), railWrap = rail.parentElement, heroWord = $('heroWord'), footWord = $('footWord');
-let railX = 0;
+let railX = 0, railTarget = 0, plxY = -1;
 
 /* ---------- hero 3D scene ---------- */
 const hero = document.querySelector('.hero'), pin = $('pin'), canvas = $('scene');
@@ -582,14 +647,22 @@ const setPhase = i => {
   flipping = true; stage.classList.add('flip');
   setTimeout(() => { curPhase = i; $('ph').textContent = phases[i][0]; $('phT').textContent = phases[i][1]; $('phS').textContent = phases[i][2]; $('idx').textContent = '0'+(i+1); stage.classList.remove('flip'); flipping = false; }, 260);
 };
-const isMobile = () => matchMedia('(max-width:900px)').matches;
+const isMobile = () => innerWidth <= 900;
+const mode = () => innerWidth > 900 ? 'desk' : (innerWidth > innerHeight && innerHeight < 600 ? 'land' : 'mob');
+const applyMode = () => { document.body.classList.toggle('land', mode() === 'land'); };
+applyMode();
+let resizeT; addEventListener('resize', () => { clearTimeout(resizeT); resizeT = setTimeout(applyMode, 80); });
 const heroProgress = () => { const r = hero.getBoundingClientRect(); return clamp(-r.top / (hero.offsetHeight - innerHeight), 0, 1); };
 
 let three = null;
 try {
   if (typeof THREE === 'undefined') throw new Error('no THREE');
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
-  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  let dpr = Math.min(devicePixelRatio || 1, isMobile() ? 1.5 : 2);
+  renderer.setPixelRatio(dpr);
+  // adaptive quality: if frames run long, step the pixel ratio down (never below 1)
+  let frameAcc = 0, frameN = 0;
+  const sampleFrame = ms => { frameAcc += ms; frameN++; if (frameN >= 90) { const avg = frameAcc / frameN; frameAcc = 0; frameN = 0; if (avg > 22 && dpr > 1) { dpr = Math.max(1, dpr - .25); renderer.setPixelRatio(dpr); } } };
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.05;
   const scene = new THREE.Scene();
@@ -604,21 +677,23 @@ try {
   /* --- textures: paper cup print with the real brand mark --- */
   const logoImg = new Image(); logoImg.src = ASSETS.logo;
   const makePrint = (bg, ink, paperTint) => {
-    const c = document.createElement('canvas'); c.width = 2048; c.height = 1024; const x = c.getContext('2d');
+    const c = document.createElement('canvas'); const TW = isMobile() ? 1024 : 2048; c.width = TW; c.height = TW / 2; const x = c.getContext('2d');
     x.fillStyle = bg; x.fillRect(0, 0, c.width, c.height);
-    // paper fibre
-    const img = x.getImageData(0,0,c.width,c.height), d = img.data;
-    for (let i = 0; i < d.length; i += 4) { const n = (Math.random() - .5) * paperTint; d[i] += n; d[i+1] += n; d[i+2] += n; }
-    x.putImageData(img, 0, 0);
+    // paper fibre: a small noise tile repeated as a pattern (cheap to build)
+    const tile = document.createElement('canvas'); tile.width = tile.height = 128; const tx0 = tile.getContext('2d');
+    const img = tx0.createImageData(128, 128), d = img.data;
+    for (let i = 0; i < d.length; i += 4) { const n = 128 + (Math.random() - .5) * paperTint * 2; d[i] = d[i+1] = d[i+2] = n; d[i+3] = 60; }
+    tx0.putImageData(img, 0, 0);
+    x.globalCompositeOperation = 'overlay'; x.fillStyle = x.createPattern(tile, 'repeat'); x.fillRect(0, 0, c.width, c.height); x.globalCompositeOperation = 'source-over';
     // vertical soft shading bands make the paper read as cylindrical
     const g = x.createLinearGradient(0,0,c.width,0); g.addColorStop(0,'rgba(0,0,0,.08)'); g.addColorStop(.5,'rgba(255,255,255,.04)'); g.addColorStop(1,'rgba(0,0,0,.08)');
     x.fillStyle = g; x.fillRect(0,0,c.width,c.height);
     const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
     const draw = () => {
-      const w = 640, h = w * logoImg.height / logoImg.width;
+      const w = c.width * .3125, h = w * logoImg.height / logoImg.width;
       const t = document.createElement('canvas'); t.width = w; t.height = h; const tx = t.getContext('2d');
       tx.drawImage(logoImg, 0, 0, w, h); tx.globalCompositeOperation = 'source-in'; tx.fillStyle = ink; tx.fillRect(0,0,w,h);
-      x.drawImage(t, c.width/2 - w/2, 370);
+      x.drawImage(t, c.width/2 - w/2, c.height * .36);
       tex.needsUpdate = true;
     };
     if (logoImg.complete && logoImg.naturalWidth) draw(); else logoImg.addEventListener('load', draw);
@@ -629,10 +704,11 @@ try {
 
   const shadowTex = (() => { const c = document.createElement('canvas'); c.width = c.height = 256; const x = c.getContext('2d'); const g = x.createRadialGradient(128,128,10,128,128,128); g.addColorStop(0,'rgba(40,20,10,.55)'); g.addColorStop(.5,'rgba(40,20,10,.18)'); g.addColorStop(1,'rgba(40,20,10,0)'); x.fillStyle = g; x.fillRect(0,0,256,256); return new THREE.CanvasTexture(c); })();
 
+  const SEG = isMobile() ? 72 : 96;
   const makeCup = (print, lidColor) => {
     const g = new THREE.Group();
     const paper = new THREE.MeshStandardMaterial({ map: print, roughness: .62, metalness: 0 });
-    const wall = new THREE.Mesh(new THREE.CylinderGeometry(.95, .72, 2.4, 128, 1, true), paper);
+    const wall = new THREE.Mesh(new THREE.CylinderGeometry(.95, .72, 2.4, SEG, 1, true), paper);
     wall.rotation.y = Math.PI; g.add(wall);
     const bottom = new THREE.Mesh(new THREE.CircleGeometry(.72, 64), new THREE.MeshStandardMaterial({ color: 0xd9c6ac, roughness: .8 }));
     bottom.rotation.x = Math.PI/2; bottom.position.y = -1.2; g.add(bottom);
@@ -641,9 +717,9 @@ try {
     // lid: lathe profile measured against the photo (raised ring, recessed top, sip spout)
     const lidMat = new THREE.MeshStandardMaterial({ color: lidColor, roughness: .42, metalness: .06 });
     const prof = [[.86,0],[1.0,0],[1.04,.07],[1.04,.17],[.99,.22],[.99,.3],[.9,.33],[.74,.33],[.7,.39],[.52,.4],[.48,.46],[0,.46]].map(([r,y]) => new THREE.Vector2(r,y));
-    const lid = new THREE.Mesh(new THREE.LatheGeometry(prof, 128), lidMat); lid.position.y = 1.2; g.add(lid);
+    const lid = new THREE.Mesh(new THREE.LatheGeometry(prof, SEG), lidMat); lid.position.y = 1.2; g.add(lid);
     const spout = new THREE.Mesh(new THREE.CylinderGeometry(.11, .13, .05, 32), lidMat); spout.scale.set(1.9, 1, 1); spout.position.set(0, 1.2 + .48, .56); g.add(spout);
-    const seam = new THREE.Mesh(new THREE.TorusGeometry(1.02, .012, 8, 128), new THREE.MeshStandardMaterial({ color: 0x120906, roughness: .5 })); seam.rotation.x = Math.PI/2; seam.position.y = 1.2 + .07; g.add(seam);
+    const seam = new THREE.Mesh(new THREE.TorusGeometry(1.02, .012, 6, SEG), new THREE.MeshStandardMaterial({ color: 0x120906, roughness: .5 })); seam.rotation.x = Math.PI/2; seam.position.y = 1.2 + .07; g.add(seam);
     const sh = new THREE.Mesh(new THREE.PlaneGeometry(3.4, 1.5), new THREE.MeshBasicMaterial({ map: shadowTex, transparent: true, depthWrite: false }));
     sh.rotation.x = -Math.PI/2; sh.position.y = -1.22; g.userData.shadow = sh; scene.add(sh);
     scene.add(g); return g;
@@ -659,26 +735,28 @@ try {
   }
   // dust motes
   const motes = new THREE.Group(); scene.add(motes);
-  for (let i = 0; i < 70; i++) {
+  for (let i = 0, N = isMobile() ? 28 : 60; i < N; i++) {
     const m = new THREE.Mesh(new THREE.SphereGeometry(.008 + Math.random()*.016, 6, 6), new THREE.MeshBasicMaterial({ color: i%3 ? 0xb76148 : 0x40271f, transparent: true, opacity: .15 + Math.random()*.3 }));
     m.position.set((Math.random()-.5)*12, (Math.random()-.5)*7, -1.5 - Math.random()*4); m.userData = { x: m.position.x, y: m.position.y, s: .1 + Math.random()*.25, p: Math.random()*6.28 }; motes.add(m);
   }
 
   let mouseX = 0, mouseY = 0, tX = 0, tY = 0;
-  addEventListener('pointermove', e => { tX = (e.clientX / innerWidth - .5) * 2; tY = (e.clientY / innerHeight - .5) * 2; }, { passive: true });
+  if (matchMedia('(hover:hover) and (pointer:fine)').matches) addEventListener('pointermove', e => { tX = (e.clientX / innerWidth - .5) * 2; tY = (e.clientY / innerHeight - .5) * 2; }, { passive: true });
 
   const resize = () => {
     const w = pin.clientWidth, h = pin.clientHeight;
     renderer.setSize(w, h, false); camera.aspect = w / h;
-    const mobile = w < 900;
+    const mobile = w <= 900 && !(w > h && h < 600);
     camera.fov = mobile ? 40 : 30; camera.position.z = mobile ? 12.5 : 10; camera.position.y = .7; camera.lookAt(0, .1, 0);
     camera.updateProjectionMatrix();
   };
   addEventListener('resize', resize); resize();
 
   three = { render(p, t) {
-    const mobile = pin.clientWidth < 900;
-    const S = mobile ? .7 : .95;
+    const md = mode(), mobile = md !== 'desk', land = md === 'land', short = mobile && pin.clientHeight < 720;
+    const tablet = mobile && !land && innerWidth >= 600;
+    const S = land ? .72 : tablet ? .88 : short ? .62 : mobile ? .7 : .95;
+    const cx = land ? 1.9 : 0;
     mouseX = lerp(mouseX, tX, .05); mouseY = lerp(mouseY, tY, .05);
     const bob = Math.sin(t * .9) * .05;
 
@@ -692,19 +770,19 @@ try {
     // phase 4: camera eases back, cups lean in
     const e4 = smooth(p, .82, 1);
 
-    const baseY = mobile ? -1.6 : 0;
-    const spread = mobile ? 1.3 : 1.35;
+    const baseY = land ? -.2 : tablet ? -1.9 : short ? -1.5 : mobile ? -1.6 : 0;
+    const spread = land ? 1.1 : mobile ? 1.3 : 1.35;
     const a = e3 * Math.PI;
-    const ix0 = lerp(mobile ? 0 : .8, -spread, e2), tx0 = lerp(6, spread, e2);
+    const ix0 = lerp(mobile && !land ? 0 : .8, -spread, e2), tx0 = lerp(6, spread, e2);
     // during the swap both cups ride an ellipse: ivory comes forward, terracotta passes behind
     const px = e3 > 0 ? -spread * Math.cos(a) : ix0, qx = e3 > 0 ? spread * Math.cos(a) : tx0;
     const pz = Math.sin(a) * 1.4, qz = -Math.sin(a) * 1.4;
 
-    ivory.position.set(px * S + mouseX * .1, baseY + (1 - e1) * -6 + bob + e4 * .15, pz);
+    ivory.position.set(cx + px * S + mouseX * .1, baseY + (1 - e1) * -6 + bob + e4 * .15, pz);
     ivory.rotation.set(mouseY * .06 + e4 * .06, (1 - e1) * -1.1 + a * 2 + mouseX * .25 + Math.sin(t * .4) * .04, (1 - e1) * -.25 - e4 * .08);
     ivory.scale.setScalar(S * (1 - e4 * .06));
 
-    terra.position.set(qx * S + mouseX * .1, baseY + (1 - e2) * -1.2 + Math.sin(t * .9 + 1.4) * .05 + e4 * .15, qz);
+    terra.position.set(cx + qx * S + mouseX * .1, baseY + (1 - e2) * -1.2 + Math.sin(t * .9 + 1.4) * .05 + e4 * .15, qz);
     terra.rotation.set(mouseY * .06 + e4 * .06, (1 - e2) * 1.4 + a * 2 + mouseX * .25 + Math.cos(t * .5) * .04, (1 - e2) * .3 + e4 * .08);
     terra.scale.setScalar(S * (1 - e4 * .06)); terra.visible = e2 > .01;
 
@@ -721,7 +799,7 @@ try {
     motes.children.forEach(m => { m.position.y = m.userData.y + Math.sin(t * m.userData.s + m.userData.p) * .25; m.position.x = m.userData.x + Math.sin(t * .22 + m.userData.p) * .15; });
 
     camera.position.z = (mobile ? 12.5 : 10) + e4 * 1.6; camera.position.x = mouseX * .2;
-    renderer.render(scene, camera);
+    const t0 = performance.now(); renderer.render(scene, camera); sampleFrame(performance.now() - t0);
   } };
 } catch (err) {
   console.warn('3D scene unavailable:', err);
@@ -740,8 +818,7 @@ const tick = now => {
     $('prog').style.width = (p * 100) + '%';
     setPhase(p < .24 ? 0 : p < .52 ? 1 : p < .82 ? 2 : 3);
     const fade = 1 - smooth(p, .12, .34);
-    heroCopy.style.opacity = fade; heroCopy.style.transform = `translateY(calc(-50% + ${(1 - fade) * -40}px))`;
-    if (isMobile()) heroCopy.style.transform = `translateY(${(1 - fade) * -40}px)`;
+    heroCopy.style.opacity = fade; heroCopy.style.transform = mode() === 'mob' ? `translateY(${(1 - fade) * -40}px)` : `translateY(calc(-50% + ${(1 - fade) * -40}px))`;
     heroWord.style.transform = `translate(-50%,-50%) translateX(${(p - .5) * -16}vw) scale(${1 + p * .18})`;
     heroWord.style.opacity = .35 + p * .65;
     if (three) three.render(p, t);
@@ -752,15 +829,19 @@ const tick = now => {
   velocity *= .9;
   mx -= mspeed * dt * 60;
   if (setW) { if (mx <= -setW) mx += setW; if (mx > 0) mx -= setW; }
-  track.style.transform = `translate3d(${mx}px,0,0)`;
+  if (mqOn) track.style.transform = `translate3d(${mx}px,0,0)`;
   // parallax
-  if (!reduced) {
+  // scroll-bound effects: only when the page actually moved; all layout reads happen before any write
+  if (!reduced && (scrollY !== plxY || railX !== railTarget)) {
+    plxY = scrollY;
     const vh = innerHeight;
-    plx.forEach(el => { const r = el.getBoundingClientRect(); if (r.bottom < 0 || r.top > vh) return; const c = (r.top + r.height/2 - vh/2) / vh; el.style.transform = `translate3d(0,${c * -100 * parseFloat(el.dataset.parallax)}px,0)` + (el.classList.contains('big') ? ' translate(-50%,-50%)' : ''); });
+    const rects = plx.map(el => el.getBoundingClientRect());
+    const rr = railWrap.getBoundingClientRect(), fr = footWord.getBoundingClientRect();
+    plx.forEach((el, i) => { const r = rects[i]; if (r.bottom < 0 || r.top > vh) return; const c = (r.top + r.height/2 - vh/2) / vh; el.style.transform = `translate3d(0,${c * -100 * parseFloat(el.dataset.parallax)}px,0)` + (el.classList.contains('big') ? ' translate(-50%,-50%)' : ''); });
     if (sticker) sticker.style.transform = `rotate(${scrollY * .12}deg)`;
-    const rr = railWrap.getBoundingClientRect();
-    if (!isMobile() && rr.bottom > 0 && rr.top < vh) { const prog = clamp((vh - rr.top) / (vh + rr.height), 0, 1); const max = Math.max(0, rail.scrollWidth - innerWidth + 24); railX = lerp(railX, -prog * Math.min(max, innerWidth * .5), .08); rail.style.transform = `translate3d(${railX}px,0,0)`; }
-    const fr = footWord.getBoundingClientRect(); if (fr.top < vh) footWord.style.transform = `translateX(${(fr.top / vh - .5) * 12}vw)`;
+    if (!isMobile() && rr.bottom > 0 && rr.top < vh) { const prog = clamp((vh - rr.top) / (vh + rr.height), 0, 1); const max = Math.max(0, rail.scrollWidth - innerWidth + 24); railTarget = -prog * Math.min(max, innerWidth * .5); }
+    if (Math.abs(railX - railTarget) > .1) { railX = lerp(railX, railTarget, .1); rail.style.transform = `translate3d(${railX}px,0,0)`; } else railX = railTarget;
+    if (fr.top < vh) footWord.style.transform = `translateX(${(fr.top / vh - .5) * 12}vw)`;
   }
 };
 requestAnimationFrame(tick);
